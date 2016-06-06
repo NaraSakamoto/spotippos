@@ -3,7 +3,6 @@ package com.spotippos.service.validator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.spotippos.exception.InvalidRealtyException;
