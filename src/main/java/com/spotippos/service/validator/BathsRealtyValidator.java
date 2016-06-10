@@ -5,6 +5,12 @@ import org.springframework.stereotype.Component;
 import com.spotippos.exception.InvalidRealtyException;
 import com.spotippos.model.Realty;
 
+/**
+ * Valida a propriedade Baths do imóvel
+ * 
+ * @author Nara
+ *
+ */
 @Component
 public class BathsRealtyValidator implements RealtyValidator{
 

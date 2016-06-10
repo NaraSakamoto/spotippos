@@ -1,7 +1,7 @@
 package com.spotippos.service;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -62,9 +62,9 @@ public class PropertiesInitializerService {
 	 * @return o arquivo dos imóveis.
 	 * @throws IOException Caso ocorra algum erro.
 	 */
-	private File getFileContent() throws IOException {
+	private InputStream getFileContent() throws IOException {
 		ClassPathResource resource = new ClassPathResource(path);
-		return resource.getFile();
+		return resource.getInputStream();
 	}
 
 }
