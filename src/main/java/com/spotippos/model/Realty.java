@@ -1,21 +1,18 @@
 package com.spotippos.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.spotippos.model.enumx.Provinces;
 
-@JsonIgnoreProperties("id")
 public class Realty implements Serializable{
 	
 	private static final long serialVersionUID = -1625637331290768849L;
 
 	private int id;
-	@NotNull
-	private int x;
-	@NotNull
-	private int y;
+
 	@NotNull
 	private String title;
 	@NotNull
@@ -23,12 +20,20 @@ public class Realty implements Serializable{
 	@NotNull
 	private String description;
 	@NotNull
+	private int x;
+	@NotNull
+	private int y;
+	@NotNull
 	private int beds;
 	@NotNull
 	private int baths;
+
+	private List<Provinces> provinces;
+	
 	@NotNull
 	private int squareMeters;
 
+	
 	public int getId() {
 		return id;
 	}
@@ -99,5 +104,13 @@ public class Realty implements Serializable{
 
 	public void setSquareMeters(int squareMeters) {
 		this.squareMeters = squareMeters;
+	}
+
+	public List<Provinces> getProvinces() {
+		return provinces;
+	}
+
+	public void setProvinces(List<Provinces> provinces) {
+		this.provinces = provinces;
 	}
 }

@@ -29,15 +29,21 @@ public class RealtyInsertController {
 	@Autowired
 	private RealtyInsertService servico;
 	
+	/**
+	 * Insere um imovel
+	 * 
+	 * @param imovel o imovel a ser inserido
+	 * @return mensagem de sucesso.
+	 * @throws CouldNotInsertRealtyException caso o imóvel não seja inserido.
+	 */
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public String insert(@RequestBody @Valid Realty imovel) throws CouldNotInsertRealtyException{
 		LOG.info("Iniciando inclusão de imóvel " + imovel.getTitle());
 		
 		servico.insert(imovel);
 		
-		LOG.info("Imóvel " + imovel.getTitle() + " inserido com sucesso!");
+		LOG.info(imovel.getTitle() + " inserido com sucesso!");
 
-		//TODO - pensar melhor no retorno (Será que String é o melhor?)
-		return "Imóvel " + imovel.getTitle() + " inserido com sucesso!";
+		return imovel.getTitle() + " inserido com sucesso!";
 	}
 }

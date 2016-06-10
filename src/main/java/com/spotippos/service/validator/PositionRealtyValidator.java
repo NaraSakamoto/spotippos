@@ -5,6 +5,12 @@ import org.springframework.stereotype.Component;
 import com.spotippos.exception.InvalidRealtyException;
 import com.spotippos.model.Realty;
 
+/**
+ * Valida a posição do imóvel.
+ * 
+ * @author Nara
+ *
+ */
 @Component
 public class PositionRealtyValidator implements RealtyValidator{
 

@@ -3,6 +3,7 @@ package com.spotippos.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.spotippos.exception.RealtyNotFoundException;
+import com.spotippos.model.Properties;
 import com.spotippos.model.Realty;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -19,7 +22,7 @@ public class RealtyRepositoryTest {
 	private RealtyRepository respository;
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void shouldThrowException(){
+	public void shouldThrowExceptionBecauseRealtyIsNull(){
 		//GIVEN
 		Realty realty = null;
 		
@@ -33,7 +36,7 @@ public class RealtyRepositoryTest {
 	public void shouldInsertRealty(){
 		//GIVEN
 		Map<Integer, Realty> map = new HashMap<>();
-		ReflectionTestUtils.setField(respository, "map", map);
+		ReflectionTestUtils.setField(respository, "realtyMapById", map);
 		
 		Realty realty = new Realty();
 		realty.setX(222);
@@ -65,4 +68,65 @@ public class RealtyRepositoryTest {
 		Assert.assertNotNull(map.get(2));
 		Assert.assertNull(map.get(0));
 	}
+	
+	@Test(expected=RealtyNotFoundException.class)
+	public void shouldThrowExceptionBecauseRealtyWasNotFound() throws RealtyNotFoundException{
+		//GIVEN
+		int id = 764;
+		
+		//WHEN
+		respository.findById(id);
+		
+		//THEN - RealtyNotFoundException
+	}
+	
+	@Test
+	public void shouldFindRealtyById() throws RealtyNotFoundException{
+		//GIVEN
+		int id = 1;
+		
+		Realty realty = new Realty();
+		realty.setX(222);
+		realty.setY(444);
+		realty.setBaths(3);
+		realty.setBeds(4);
+		realty.setTitle("Imóvel código 1, com 5 quartos e 4 banheiros");
+		realty.setPrice(1250000);
+		realty.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+		realty.setSquareMeters(210);
+		
+		respository.insert(realty);
+		
+		//WHEN
+		Realty result = respository.findById(id);
+		
+		//THEN
+		Assert.assertEquals(id, result.getId());
+	}
+	
+	@Test
+	public void deveEncontrarRealtyDentroDaArea(){
+		int ax = 2;
+		int bx = 10;
+		int ay = 8;
+		int by = 0;
+		
+		Realty realty = new Realty();
+		realty.setX(8);
+		realty.setY(1);
+		realty.setBaths(3);
+		realty.setBeds(4);
+		realty.setTitle("Imóvel código 1, com 5 quartos e 4 banheiros");
+		realty.setPrice(1250000);
+		realty.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+		realty.setSquareMeters(210);
+		respository.insert(realty);
+		
+		Properties properties = respository.findByArea(ax, ay, bx, by);
+		
+		Assert.assertEquals(1, properties.getProperties().size());
+	}
+	
+	
+
 }
